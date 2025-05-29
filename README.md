@@ -104,9 +104,9 @@ Para criar as tabelas eu usei o TypeORM, que é um ORM que permite criar as tabe
 
 ## Endpoints API
 
-| Método | Rota                         | Descrição                              |
+| Método | Rota                         | Descrição                            |
 |--------|------------------------------|--------------------------------------|
-| POST   | /auth/register               | Registrar novo usuário                |
+| POST   | /auth/register               | Registrar novo usuário               |
 | POST   | /auth/login                  | Autenticar usuário e gerar token JWT |
 | GET    | /users/me                   | Dados do usuário autenticado          |
 | POST   | /transactions               | Criar transferência                   |
