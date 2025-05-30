@@ -4,6 +4,11 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import 'dotenv/config'
 
+// Modules
+import { AuthModule } from './auth/auth.module'
+import { UsersModule } from './users/users.module'
+import { TransactionModule } from './transactions/transaction.module'
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -16,7 +21,10 @@ import 'dotenv/config'
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
       logging: true
-    })
+    }),
+    AuthModule,
+    UsersModule,
+    TransactionModule
   ],
   controllers: [AppController],
   providers: [AppService],
