@@ -1,6 +1,6 @@
 import { Controller, Get, UseGuards, Request, ClassSerializerInterceptor, UseInterceptors } from '@nestjs/common'
 import { UsersService } from './users.service'
-import { JwtAuthGuard } from '../auth/jwt-auth.guard'
+import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard'
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { UserResponseDto } from './dto/user-response.dto'
 

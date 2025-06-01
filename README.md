@@ -142,7 +142,48 @@ Para criar as tabelas eu usei o TypeORM, que é um ORM que permite criar as tabe
 
 ---
 
-## Iniciar o projeto:
+## Swagger:
+
+Este projeto utiliza Swagger para documentar automaticamente os endpoints da API.
+
+### Como acessar
+
+1 - Inicie o projeto com: npm start
+
+2 - Acesse a documentação interativa no navegador: http://localhost:3000/docs
+
+### Como foi configurado
+
+1 - Instalei o Swagger com o comando:
+  npm install @nestjs/swagger swagger-ui-express
+
+2 - Configurei o main.ts para importar o Swagger e configurar a documentação
+
+3 - Adicionei as anotações @ApiTags, @ApiOperation, @ApiBody, @ApiResponse, etc, nos controllers para documentar os endpoints e nos dto s
+
+4 - Rodei a aplicação e acessei a documentação no navegador: http://localhost:3000/docs
+
+---
+
+## Testes com Jest
+
+O projeto possui testes unitários e de integração utilizando o Jest, o framework de testes padrão do NestJS.
+
+### Como rodar os testes
+
+1 - Rode o comando: npm run test
+
+2 - Para ver os testes com cobertura, rode o comando: npm run test:cov
+
+### Como foi configurado
+
+O Jest foi configurado automaticamente pelo NestJS, então não foi necessário fazer nada além de escrever os testes.
+
+Os testes cobrem os principais cenários de sucesso e falha dos endpoints, incluindo validações de saldo, autenticação, etc.
+
+---
+
+## Executando o Projeto
 
 1° - Considerando que o container do banco de dados já esteja rodando, rode o comando:
   npm install

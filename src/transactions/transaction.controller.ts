@@ -1,12 +1,12 @@
 import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common'
-import { JwtAuthGuard } from '../auth/jwt-auth.guard'
+import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard'
 import { TransactionService } from './transaction.service'
 import { Roles } from '../auth/roles.decorator'
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { CreateTransactionDto } from './dto/create-transaction.dto'
 import { ReserveTransactionDto } from './dto/reserve-transaction.dto'
 import { DepositDto } from './dto/deposit.dto' 
-import { RolesGuard } from 'src/auth/roles.guard'
+import { RolesGuard } from '../auth/roles.guard'
 
 @ApiTags('Users')
 @ApiBearerAuth()
