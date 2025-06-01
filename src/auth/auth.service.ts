@@ -21,8 +21,8 @@ export class AuthService {
 
             return { user, token }
         } catch (error) {
-            // Código para conflito ( achei o mais apropriado pro caso )
-            if (error.code === '409') {
+            // Código de erro para violação de unicidade
+            if (error.code === '23505') {
                 throw new ConflictException('E-mail já cadastrado')
             }
 
