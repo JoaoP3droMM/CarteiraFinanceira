@@ -1,9 +1,11 @@
 import { NestFactory } from '@nestjs/core'
-import { AppModule } from './app.module'
 import { ValidationPipe, ClassSerializerInterceptor, Logger } from '@nestjs/common'
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
 import { Reflector } from '@nestjs/core'
+import { DataSource } from 'typeorm'
+import { AppModule } from './app.module'
 import 'dotenv/config'
+import { createRootUser } from './seed/root-user.seed'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
@@ -29,6 +31,10 @@ async function bootstrap() {
     .build()
   const document = SwaggerModule.createDocument(app, config)
   SwaggerModule.setup('docs', app, document)
+
+  // 4) Cria usuário root
+  const dataSource = app.get<DataSource>(DataSource)
+  await createRootUser(dataSource)
 
   // CORS, prefixos, etc., se quiser
   app.enableCors()

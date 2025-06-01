@@ -13,3 +13,5 @@ export class UserResponseDto {
   @Expose ()
   balance: number
 }
+
+// Aqui optei por não expor a role porque como só o root banco vai fazer transações, melhor o usuário nem saber que existe esse campo

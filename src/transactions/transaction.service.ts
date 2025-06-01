@@ -1,8 +1,8 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { DataSource, Repository, QueryRunner } from 'typeorm'
-import { Transaction, TransactionStatus } from '../entities/transaction.entity'
-import { User } from '../entities/user.entity'
+import { Transaction, TransactionStatus, TransactionType } from '../entities/transaction.entity'
+import { User, UserRole } from '../entities/user.entity'
 import { CreateTransactionDto } from './dto/create-transaction.dto'
 import { ReserveTransactionDto } from './dto/reserve-transaction.dto'
 
@@ -30,7 +30,7 @@ export class TransactionService {
 
         try {
             const fromUser = await queryRunner.manager.findOne(User, { where: { id: fromUserId } })
-            const toUser = await queryRunner.manager.findOne(User, { where: { id: fromUserId } })
+            const toUser = await queryRunner.manager.findOne(User, { where: { id: toUserId } })
 
             if (!fromUser || !toUser) {
                 throw new NotFoundException('Usuário não encontrado')
@@ -61,7 +61,7 @@ export class TransactionService {
             await queryRunner.rollbackTransaction()
             throw error
         } finally {
-            await queryRunner.release() 
+            await queryRunner.release()
         }
     }
 
@@ -105,6 +105,37 @@ export class TransactionService {
         } finally {
             await queryRunner.release()
         }
+    }
+
+    // Realiza o depósito
+    async deposit(toUserId: number, amount: number): Promise<Transaction> {
+
+        // Busca usuário que receberá o depósito
+        const toUser = await this.userRepo.findOne({ where: { id: toUserId } })
+        if (!toUser) {
+            throw new NotFoundException('Usuário de destino não encontrado')
+        }
+
+        // Carrega o usuário que fará o depósito ( root )
+        const fromUser = await this.userRepo.findOne({ where: { role: UserRole.ROOT } })
+        if (!fromUser) {
+            throw new NotFoundException('Usuário de origem não encontrado')
+        }
+
+        // Atualiza saldo
+        toUser.balance = +toUser.balance + amount
+        await this.userRepo.save(toUser)
+
+        // Registra a transação atribuindo um fromUser
+        const tx = this.txRepo.create({
+            fromUser,
+            toUser,
+            amount,
+            status: TransactionStatus.COMPLETED,
+            type: TransactionType.DEPOSIT
+        })
+
+        return this.txRepo.save(tx)
     }
 
     // Lista todas as transações

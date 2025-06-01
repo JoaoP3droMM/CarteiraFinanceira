@@ -5,6 +5,7 @@ import { RegisterDto } from './dto/register.dto'
 import * as bcrypt from 'bcrypt'
 
 @Injectable()
+
 export class AuthService {
     constructor(
         private userService: UsersService,
@@ -15,8 +16,10 @@ export class AuthService {
         const hashed = await bcrypt.hash(dto.password, 10)
         try {
             const user = await this.userService.create({ ...dto, password: hashed })
-            const payload = { sub: user.id, email: user.email }
-            return { user, token: this.jwtService.sign(payload) }
+            const payload = { sub: user.id, email: user.email, role: user.role }
+            const token = this.jwtService.sign(payload)
+
+            return { user, token }
         } catch (error) {
             // Código para conflito ( achei o mais apropriado pro caso )
             if (error.code === '409') {
@@ -33,7 +36,7 @@ export class AuthService {
             throw new UnauthorizedException('Usuário ou senha inválidas')
         }
 
-        const payload = { sub: user.id, email: user.email }
+        const payload = { sub: user.id, email: user.email, role: user.role }
         return { token: this.jwtService.sign(payload) }
     }
 }

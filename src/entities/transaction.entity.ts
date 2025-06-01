@@ -7,6 +7,11 @@ export enum TransactionStatus {
   REVERSED = 'reversed'
 }
 
+export enum TransactionType {
+  DEPOSIT = 'deposit',
+  TRANSFER = 'transfer'
+}
+
 @Entity()
 
 export class Transaction {
@@ -24,6 +29,9 @@ export class Transaction {
 
   @Column({ type: 'enum', enum: TransactionStatus, default: TransactionStatus.PENDING })
   status: TransactionStatus
+
+  @Column({ type: 'enum', enum: TransactionType, default: TransactionType.TRANSFER })
+  type: TransactionType
 
   @CreateDateColumn()
   createdAt: Date
