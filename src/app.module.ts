@@ -1,7 +1,5 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { Module } from '@nestjs/common'
+import { TypeOrmModule } from '@nestjs/typeorm'
 import 'dotenv/config'
 
 // Modules
@@ -25,9 +23,7 @@ import { TransactionModule } from './transactions/transaction.module'
     AuthModule,
     UsersModule,
     TransactionModule
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+  ]
 })
 
 export class AppModule {}

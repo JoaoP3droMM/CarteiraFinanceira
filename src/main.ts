@@ -22,7 +22,7 @@ async function bootstrap() {
     new ClassSerializerInterceptor(app.get(Reflector))
   )
 
-  // 3) (Opcional) Swagger
+  // 3) Swagger (http://localhost:3000/docs)
   const config = new DocumentBuilder()
     .setTitle('API Carteira Financeira')
     .setDescription('Endpoints de autenticação, usuários e transações')

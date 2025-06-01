@@ -1,11 +1,13 @@
-# Projeto: Carteira Financeira
+# Projeto: Carteira Financeira 💰
+
+Aplicação backend que simula uma carteira digital entre usuários, com foco em segurança, consistência e reversibilidade de operações financeiras.
 
 ## Tecnologias Utilizadas
 - Node.js
 - NestJS
 - TypeScript
 - PostgreSQL
-- ORM: TypeORM ou Prisma
+- ORM: TypeORM
 - Docker
 - Jest (testes unitários e integração)
 - Swagger (documentação da API)
@@ -13,7 +15,12 @@
 ---
 
 ## Objetivo
-Criar uma carteira financeira onde usuários podem transferir saldo entre si, garantindo segurança, consistência e reversibilidade das operações.
+Criar uma carteira financeira onde usuários podem transferir saldo entre si, com:
+
+1 - Validação de saldo
+2 - Transações atômicas
+3 - Possibilidade de reversão de transações
+4 - Histórico de transações
 
 ---
 
@@ -108,10 +115,10 @@ Para criar as tabelas eu usei o TypeORM, que é um ORM que permite criar as tabe
 |--------|------------------------------|--------------------------------------|
 | POST   | /auth/register               | Registrar novo usuário               |
 | POST   | /auth/login                  | Autenticar usuário e gerar token JWT |
-| GET    | /users/me                   | Dados do usuário autenticado          |
-| POST   | /transactions               | Criar transferência                   |
-| GET    | /transactions               | Listar transações do usuário          |
-| POST   | /transactions/:id/revert    | Reverter uma transação                |
+| GET    | /users/me                    | Dados do usuário autenticado         |
+| POST   | /transactions                | Criar transferência                  |
+| GET    | /transactions                | Listar transações do usuário         |
+| POST   | /transactions/:id/revert     | Reverter uma transação               |
 
 ---
 
@@ -129,25 +136,19 @@ Para criar as tabelas eu usei o TypeORM, que é um ORM que permite criar as tabe
 
 ## Diferenciais / Extras
 
-- Containerização com Docker e Docker Compose
+- Containerização com Docker
 - Testes unitários e de integração com Jest
 - Documentação automática com Swagger
-- Middleware de logging (ex: Winston)
 
 ---
 
-## Cronograma Sugerido
+## Iniciar o projeto:
 
-| Etapa                   | Objetivo                                    | Tempo Estimado |
-|-------------------------|---------------------------------------------|---------------|
-| Setup inicial NestJS + DB | Criar projeto, configurar ORM, docker       | 2-3 horas     |
-| Cadastro e autenticação  | Registro, login, hash senha, JWT            | 3 horas      |
-| CRUD usuário + saldo     | Endpoint perfil e saldo                      | 1 hora       |
-| Transferência            | Lógica de transferência e validações       | 4 horas      |
-| Reversão da transação    | Endpoint e lógica de reversão                | 2 horas      |
-| Testes                   | Unitários e integração                       | 4 horas      |
-| Documentação e logs      | Swagger e logging                            | 2 horas      |
-| Ajustes finais           | Debug e preparação para apresentação         | 2 horas      |
+1° - Considerando que o container do banco de dados já esteja rodando, rode o comando:
+  npm install
+
+2° - Rode o comando:
+  npm start
 
 ---
 
