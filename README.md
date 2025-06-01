@@ -67,6 +67,11 @@ Criar uma carteira financeira onde usuários podem transferir saldo entre si, co
 | updatedAt  | Date    | Data da última atualização       |
 
 ### Criando o Banco de Dados via docker
+
+Eu utilizo linux que já vem com docker pré instalado, no caso do windows é necessário instalar o docker desktop. pelo link https://www.docker.com/products/docker-desktop/
+
+Eu criei um container com o banco de dados PostgreSQL, para isso rodei o comando:
+
 docker run --name carteira-db -p 5432:5432 -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -e POSTGRES_DB=carteira -d postgres
 
 docker run: Este é o comando básico para executar um novo container Docker.
