@@ -70,30 +70,47 @@ Criar uma carteira financeira onde usuários podem transferir saldo entre si, co
 
 Eu utilizo linux que já vem com docker pré instalado, no caso do windows é necessário instalar o docker desktop. pelo link https://www.docker.com/products/docker-desktop/
 
+
 Eu criei um container com o banco de dados PostgreSQL, para isso rodei o comando:
+
 
 docker run --name carteira-db -p 5432:5432 -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -e POSTGRES_DB=carteira -d postgres
 
+
 docker run: Este é o comando básico para executar um novo container Docker.
+
 --name carteira-db: Atribui o nome carteira-db ao container.
+
 -p 5432:5432: Mapeia a porta 5432 do container para a porta 5432 da máquina host. Utilizei esta porque é a padrão do PostgreSQL.
+
 -e POSTGRES_USER=admin: Define a variável de ambiente POSTGRES_USER dentro do container.
+
 -e POSTGRES_PASSWORD=password: Define a variável de ambiente POSTGRES_PASSWORD para a senha do usuário que foi definido acima
+
 -e POSTGRES_DB=carteira: Define a variável de ambiente POSTGRES_DB para o nome do banco de dados que será criado automaticamente na inicialização do container. 
+
 -d postgres: Especifica a imagem do Docker Hub que será usada para criar o container. Aqui, estou usando a imagem oficial do PostgreSQL (postgres). O flag -d significa "detached", o que faz com que o container rode em segundo plano.
+
 
 Agora que o banco está criado, para rodar faço:
 
+
 docker run --name carteira-db -p 5432:5432 -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -e POSTGRES_DB=carteira -d postgres
+
 
 Para ver se está tudo ok, rode:
 
+
 docker ps que deve mostrar algo como:
+
 
 CONTAINER ID   IMAGE      COMMAND                  CREATED              STATUS              PORTS                                       NAMES
 87d371ac2e78   postgres   "docker-entrypoint.s…"   About a minute ago   Up About a minute   0.0.0.0:5432->5432/tcp, :::5432->5432/tcp   carteira-db
 
+
 OPICIONAL: Para visualizar o banco de dados em um gerenciador como PGAdmin ou DBeaver ( o que estou usando ), basta clicar em nova conexão, selecionar PostgreSQL e preencher os dados de conexão com os dados do container, que no caso é localhost, 5432, admin e password.
+
+---
 
 ### Criando as tabelas
 Para criar as tabelas eu usei o TypeORM, que é um ORM que permite criar as tabelas via código.
