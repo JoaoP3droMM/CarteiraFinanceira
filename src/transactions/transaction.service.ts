@@ -65,6 +65,7 @@ export class TransactionService {
         }
     }
 
+    // Realiza a reversão de transação
     async reserve(dto: ReserveTransactionDto): Promise<Transaction> {
         const { transactionId  } = dto
         const queryRunner = this.dataSource.createQueryRunner()
@@ -85,11 +86,14 @@ export class TransactionService {
                 throw new BadRequestException('Só é possível reverter transações completas')
             }
 
-            const { fromUser, toUser, amount } = tx
+            // Converte string em number
+            const value = Number(tx.amount)
+
+            const { fromUser, toUser } = tx
 
             // Desfaz saldos
-            toUser.balance = +toUser.balance - amount
-            fromUser.balance = +fromUser.balance + amount
+            toUser.balance = Number(toUser.balance) - value
+            fromUser.balance = Number(fromUser.balance) + value
             await queryRunner.manager.save(toUser)
             await queryRunner.manager.save(fromUser)
 
